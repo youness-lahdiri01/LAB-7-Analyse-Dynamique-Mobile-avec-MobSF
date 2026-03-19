@@ -226,6 +226,34 @@ détection root contournée
 Conclusion
 
 Absence de protection efficace contre les environnements rootés
+### Test : Hardcoded Credentials
+Objectif
+
+Identifier la présence de données sensibles codées en dur dans l’application.
+
+Étapes
+
+Lancer l’application DIVA
+
+Accéder au module "Vendor API Credentials"
+
+Observer les informations affichées
+
+Résultat observé
+
+Les identifiants suivants sont visibles directement dans l’application :
+
+API Key : 123secretapikey123
+
+Username : diva
+
+Password : p@ssword
+<img width="651" height="1044" alt="Screenshot 2026-03-19 183106" src="https://github.com/user-attachments/assets/1333c897-e1ae-4a7c-b0ae-c0cbd9a8619f" />
+
+Conclusion
+
+Les informations sensibles sont codées en dur dans l’application.
+Cela constitue une vulnérabilité critique car un attaquant peut récupérer ces données et accéder aux services associés.
 ## Étape 13 : Vulnérabilités identifiées
 
 ### Insecure Data Storage
