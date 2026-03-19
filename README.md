@@ -284,33 +284,69 @@ Cela constitue une vulnérabilité critique car un attaquant peut récupérer ce
 
 ### Insecure Data Storage
 
-* Données stockées en clair dans SQLite
+* Données stockées en clair dans SQLite (`divanotes.db`)
+* Aucune protection ou chiffrement des données sensibles
 
 ### Insecure Logging
 
-* Logs système observés (bruit principalement)
+* Peu de logs sensibles visibles
+* Logs système principalement bruités (NotificationService, ActivityManager)
+
+### Hardcoded Credentials
+
+* Présence d’informations sensibles directement dans l’application :
+
+  * API Key : `123secretapikey123`
+  * Username : `diva`
+  * Password : `p@ssword`
 
 ### Weak Access Control
 
-* Activités accessibles
+* Activités accessibles sans restriction
+* Possibilité de lancer des composants internes
 
-### Absence de chiffrement
+### TLS/SSL Misconfiguration
 
-* Données sensibles non protégées
+* Mauvaise configuration HTTPS détectée
+* Communication réseau non sécurisée correctement
+
+### Absence de Certificate Pinning
+
+* L’application n’implémente pas de certificate pinning
+* Accepte des certificats non fiables
+
+### TLS Bypass (MITM possible)
+
+* Interception HTTPS réussie via MobSF
+* Vulnérable aux attaques Man-In-The-Middle
+
+### Cleartext Traffic
+
+* Autorisation du trafic HTTP non chiffré
+* Données exposées en clair sur le réseau
 
 ---
 
 ## Étape 14 : Conclusion
 
-L’analyse dynamique avec MobSF a permis d’observer le comportement réel de l’application DIVA.
+L’analyse dynamique avec MobSF a permis d’observer le comportement réel de l’application DIVA en environnement d’exécution.
 
 Les principales vulnérabilités identifiées sont :
 
 * Stockage non sécurisé des données
+* Présence de credentials en dur dans le code
 * Absence de chiffrement
+* Mauvaise configuration TLS/SSL
+* Absence de certificate pinning
+* Vulnérabilité aux attaques MITM
 * Failles d’accès aux composants internes
 
-Cette analyse démontre l’importance de sécuriser les données et les interactions runtime dans les applications mobiles.
+Cette analyse démontre l’importance de sécuriser :
+
+* Le stockage des données
+* Les communications réseau
+* Le code source (éviter hardcoded secrets)
+* Les contrôles d’accès internes
 
 ---
 
@@ -329,5 +365,7 @@ SELECT * FROM notes;
 ## Résultat final
 
 * Environnement fonctionnel
-* Analyse dynamique réalisée
+* Analyse statique et dynamique réalisée
+* Tests avancés (TLS, Frida, logs)
 * Vulnérabilités identifiées et documentées
+* Rapport complet prêt pour exploitation
