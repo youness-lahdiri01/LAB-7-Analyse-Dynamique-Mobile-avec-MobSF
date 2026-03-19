@@ -121,7 +121,33 @@ Observation :
 
 ---
 <img width="1906" height="977" alt="Screenshot 2026-03-19 174345" src="https://github.com/user-attachments/assets/17a935c9-7e8d-4351-9539-00b67b5d0e12" />
+###Test TLS/SSL
+Objectif
 
+Évaluer la sécurité des communications réseau de l’application.
+
+Étapes
+
+Lancer le test TLS dans MobSF
+
+Naviguer dans l’application
+
+Générer du trafic via navigateur
+
+Résultat observé
+
+Le proxy MobSF a intercepté le trafic HTTPS grâce à l’installation du certificat racine.
+
+Les tests ont permis d’évaluer :
+
+la configuration TLS
+
+la présence ou absence de certificate pinning
+<img width="1146" height="860" alt="image" src="https://github.com/user-attachments/assets/ecf022ef-d68e-408e-b2fd-0757b23c4fbd" />
+
+Conclusion
+
+L’environnement est vulnérable aux attaques Man-In-The-Middle (MITM) en l’absence de mécanisme de protection robuste.
 ## Étape 10 : Analyse du stockage
 
 Accès au système :
