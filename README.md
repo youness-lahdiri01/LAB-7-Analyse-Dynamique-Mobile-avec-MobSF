@@ -174,16 +174,58 @@ cat *.xml
 
 * Vérifier les accès externes
 
-### Frida
+### . BYPASS AVEC FRIDA
+Objectif
 
-```javascript
+Intercepter ou modifier le comportement de l’application en runtime
+
+Code Frida
+
+Dans MobSF → Frida → Spawn & Inject :
+
 Java.perform(function() {
-    send("Frida actif");
+    var log = Java.use("android.util.Log");
+
+    log.d.implementation = function(tag, msg) {
+        send("Intercepted Log: " + msg);
+        return this.d(tag, msg);
+    };
 });
-```
+Résultat
 
----
+interception des logs en live
 
+possibilité de modifier le comportement
+<img width="1916" height="864" alt="image" src="https://github.com/user-attachments/assets/17abb9b8-aa8a-4e42-8626-0690d184ee74" />
+
+Conclusion
+
+L’application est vulnérable à l’instrumentation dynamique
+### BYPASS ROOT DETECTION
+Objectif
+
+Contourner les protections anti-root
+
+Code Frida
+Java.perform(function() {
+    var Runtime = Java.use("java.lang.Runtime");
+
+    Runtime.exec.overload('java.lang.String').implementation = function(cmd) {
+        if (cmd.indexOf("su") !== -1) {
+            send("Bypass root detection");
+            return null;
+        }
+        return this.exec(cmd);
+    };
+});
+Résultat
+
+détection root contournée
+<img width="785" height="435" alt="image" src="https://github.com/user-attachments/assets/71aea76e-2a9f-4984-bdcf-28bed6826f76" />
+
+Conclusion
+
+Absence de protection efficace contre les environnements rootés
 ## Étape 13 : Vulnérabilités identifiées
 
 ### Insecure Data Storage
